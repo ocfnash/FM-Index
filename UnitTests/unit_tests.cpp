@@ -268,7 +268,8 @@ protected:
             *aaaaa_fmi,
             *test_fmi,
             *long_fmi,
-            *extra_fmi;
+            *extra_fmi,
+            *yet_another_fmi;
     const std::string zero_str{'\0'},
                       aaaaa_str{"aaaaa"},
                       test_str{'\0', 'a', 'b', 'c', 'd', 'e', '\0', 'h', 'e', 'l', 'l', 'o', '\xAB', // NB Extended ASCII
@@ -284,7 +285,8 @@ protected:
                                "--- the humility of the intellect. The other great heritage is "
                                "Christian ethics --- the basis of action on love, the brotherhood of "
                                "all men, the value of the individual --- the humility of the spirit."},
-                      extra_str{"this\nshould\ncause\ntrouble"}; // Not really of course!
+                      extra_str{"this\nshould\ncause\ntrouble"}, // Not really of course!
+                      yet_another_str{"blah-de-blah"};
     std::list<std::pair<FMIndex::const_iterator, FMIndex::const_reverse_iterator>> matches;
 
     virtual void SetUp(void)
@@ -294,6 +296,7 @@ protected:
         test_fmi = new FMIndex(test_str);
         long_fmi = new FMIndex(long_str);
         extra_fmi = new FMIndex(extra_str);
+        yet_another_fmi = new FMIndex(yet_another_str);
     }
 
     virtual void TearDown(void)
@@ -303,6 +306,7 @@ protected:
         delete test_fmi;
         delete long_fmi;
         delete extra_fmi;
+        delete yet_another_fmi;
     }
 
     static std::string scan_back(FMIndex::const_reverse_iterator & it,
@@ -344,6 +348,7 @@ TEST_F(FMIndexTest, Find)
     ASSERT_EQ(17, long_fmi->find(matches, std::string("the")));
     ASSERT_EQ(1, long_fmi->find_lines(std::string("Western civilization, it")).size());
     ASSERT_EQ(2, extra_fmi->find_lines(std::string("t")).size());
+    ASSERT_EQ(1, yet_another_fmi->findn(std::string("-de")));
 }
 
 TEST_F(FMIndexTest, Scan)

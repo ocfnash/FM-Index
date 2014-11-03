@@ -19,3 +19,16 @@ UnitTests/unit_tests.cpp
 I have also included various papers which introduce the key ideas of the FM Index data structure in the docs directory.
 
 Finally note that I have used Yuta Mori's OpenBWT code to compute the Burrows-Wheeler transform.
+
+## Building and using
+
+% pip install cython  
+% cd Cython_wrapper  
+% ./make.sh  
+% python  
+`>>>` from FMIndex import PyFMIndex as fmi  
+`>>>` x = fmi('hello-there')  
+`>>>` x.findn('hello')  
+1  
+`>>>` x.findn('l')  
+2

@@ -83,8 +83,8 @@ std::pair<size_t, size_t> FMIndex::backward_search(ForwardIterator i_pattern,
     {
         C_it = C.find(*i_pattern);
         if(C_it == C.end()) return no_matches;
-        lb = C_it->second + BWT_or_BWTr->rank(BWT_idx_from_row_idx(lb, end_idx), *i_pattern);
-        ub = C_it->second + BWT_or_BWTr->rank(BWT_idx_from_row_idx(ub, end_idx), *i_pattern);
+        lb = C_it->second + BWT_or_BWTr->rank(BWT_idx_from_row_idx(lb == end_idx ? lb-1 : lb, end_idx), *i_pattern); // NB end_idx > 0 always so cannot have lb == 0 if lb == end_idx
+        ub = C_it->second + BWT_or_BWTr->rank(BWT_idx_from_row_idx(ub == end_idx ? ub-1 : ub, end_idx), *i_pattern); // As above
         if(ub <= lb) return no_matches;
     }
     return std::make_tuple(lb + 1, ub + 1); // Return as more-conventional half-open interval [lb, ub)
