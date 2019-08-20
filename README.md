@@ -8,7 +8,7 @@ The FM Index data structure stores text (or even just a blob of binary data) in 
 The FM Index data structure is built by calculating the Burrows-Wheeler transform of the text which takes some time and is not easy to update if the text changes. The data structure is thus best suited to the problem of repeatedly searching the same text for many substrings.
 
 An example application and a detailed description of the data structure can be found at my blog:
-[link](http://ocfnash.wordpress.com/2014/01/03/dna-of-a-password-disaster/)
+[link](http://olivernash.org/2014/01/03/dna-of-a-password-disaster/)
 
 A simple shell script is provided to create the Python module which should work on any system on which Cython is installed:
 Cython_wrapper/make.sh
