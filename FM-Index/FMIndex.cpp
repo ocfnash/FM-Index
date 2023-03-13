@@ -20,7 +20,7 @@ FMIndex::const_iterator::const_iterator(const std::unique_ptr<WaveletTree> & BWT
     if(!at_end()) c = BWT_or_BWTr->select(BWT_idx_from_row_idx(i, end_idx));
 }
 
-bool FMIndex::const_iterator::operator==(const FMIndex::const_iterator::const_iterator & it)
+bool FMIndex::const_iterator::operator==(const FMIndex::const_iterator & it)
 {
     return (BWT_or_BWTr == it.BWT_or_BWTr &&
             end_idx == it.end_idx &&
@@ -87,7 +87,7 @@ std::pair<size_t, size_t> FMIndex::backward_search(ForwardIterator i_pattern,
         ub = C_it->second + BWT_or_BWTr->rank(BWT_idx_from_row_idx(ub == end_idx ? ub-1 : ub, end_idx), *i_pattern); // As above
         if(ub <= lb) return no_matches;
     }
-    return std::make_tuple(lb + 1, ub + 1); // Return as more-conventional half-open interval [lb, ub)
+    return std::make_pair(lb + 1, ub + 1); // Return as more-conventional half-open interval [lb, ub)
 }
 
 void FMIndex::msd_sort(size_t * fr_perm,
@@ -189,7 +189,7 @@ size_t FMIndex::find(std::list<std::pair<const_iterator, const_reverse_iterator>
     msd_sort(fr_perm, n_matches, text_iters, max_context);
     for(size_t i = 0; i < n_matches; i++)
     {
-        matches.push_back(std::make_tuple(const_iterator(BWTr_as_wt, BWTr_end_idx, C, lbr + fr_perm[i]),
+        matches.push_back(std::make_pair(const_iterator(BWTr_as_wt, BWTr_end_idx, C, lbr + fr_perm[i]),
                                           const_reverse_iterator(BWT_as_wt, BWT_end_idx, C, lb + i)));
         delete text_iters[i];
     }

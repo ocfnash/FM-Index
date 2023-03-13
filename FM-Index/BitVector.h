@@ -2,6 +2,7 @@
 #define __FM_Index__BitVector__
 
 #include <vector>
+#include <memory>
 
 class BitVector
 {
